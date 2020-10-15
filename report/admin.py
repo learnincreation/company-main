@@ -1,6 +1,6 @@
 from django.contrib import admin
 from . import models
-from .models import DirectHR,  LeaveHR ,  DrMasterList , ChemistMasterList , DailyActivites,DailyDrcallReport,DailyDrMeetingReport,Others
+from .models import DirectHR,  LeaveHR ,  DrMasterList , Expenses , ChemistMasterList , DailyActivites, DailyDrcallReport, DailyChemistcallReport, DailyDrMeetingReport,Others
 # Daily_plan,chemistlist, Dr_visit_report, Expenses, DailyWorkingReport,HQ_List, chemist_call_report, day_summary, RCPA_details, doctor_visit_report
 from django.contrib.admin.options import ModelAdmin
 
@@ -20,18 +20,25 @@ admin.site.register(Others, OthersAdmin)
 
 
 class DailyDrcallReportAdmin(ModelAdmin):
-	list_display = ['dr_speciality','dr_name']
-	search_field = ['dr_speciality','dr_name']
-	list_filter = [ 'dr_speciality','dr_name' ]
+	list_display = ['user' , 'dr_name' ,'dr_speciality', 'workwith']
+	search_field = ['user' , 'dr_name' ,'dr_speciality', 'workwith']
+	list_filter = [ 'user' , 'dr_name' ,'dr_speciality', 'workwith' ]
 admin.site.register(DailyDrcallReport, DailyDrcallReportAdmin)
 
 
 
+class DailyChemistcallReportAdmin(ModelAdmin):
+	list_display = ['user' , 'chemist_name' ]
+	search_field = ['user' , 'chemist_name' ]
+	list_filter = [ 'user' , 'chemist_name'  ]
+admin.site.register(DailyChemistcallReport, DailyChemistcallReportAdmin)
+
+
 
 class DailyDrMeetingReportAdmin(ModelAdmin):
-	list_display = ['dr_speciality','dr_name']
-	search_field = ['dr_speciality','dr_name']
-	list_filter = [ 'dr_speciality','dr_name' ]
+	list_display = ['user','dr_name' , 'dr_speciality']
+	search_field = ['user','dr_name', 'dr_speciality']
+	list_filter = [ 'user','dr_name' , 'dr_speciality' ]
 admin.site.register(DailyDrMeetingReport, DailyDrMeetingReportAdmin)
 
 class LeaveHRAdmin(ModelAdmin):
@@ -59,7 +66,11 @@ class  DailyActivitesAdmin(ModelAdmin):
 	list_filter = ['user','is_field' , 'is_meeting', 'is_workFromHome', 'is_other', 'is_adminDay', 'is_covid19'	]
 admin.site.register( DailyActivites, DailyActivitesAdmin)
 
-
+class ExpensesAdmin(ModelAdmin):
+	list_display = ['user', 'date' , 'chemist_meeting', 'total_appointment']
+	search_field = ['user']
+	list_filter = ['user']
+admin.site.register(Expenses, ExpensesAdmin)
 
 """
 class Daily_planAdmin(ModelAdmin):

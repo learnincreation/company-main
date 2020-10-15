@@ -12,10 +12,11 @@ urlpatterns = [
   	path('leavehr/', views.LeaveHR, name = 'leave-hr'),
     path('master-doctor-list/', views.Doctor_Master_List, name = 'masterdrlist'),
     path('chemist-doctor-list/', views.chemist_Master_List, name = 'masterchemlist'),
-    path('dailyactivites/', views.dailyactivites, name = 'dailyactivites'),
-    path('fieldactivites/', views.FieldActivites, name = 'fieldactivites'),
-    path('dailydrcall/', views.DailyDrcallReportview, name = 'dailydrcall'),
-    path('dailydrmeetingreport/', views.DailyDrMeetingReportview, name = 'dailydrmeetingreport'),
+    path('daily-activites/', views.dailyactivites, name = 'dailyactivites'),
+    path('field-activites/', views.FieldActivites, name = 'fieldactivites'),
+    path('daily-dr-call/', views.DailyDrcallReportview, name = 'dailydrcall'),
+    path('daily-dr-meeting-report/', views.DailyDrMeetingReportview, name = 'dailydrmeetingreport'),
+    path('daily-chemist-callReport-view/', views.DailyChemistcallReportview, name = 'dailychemistmeetingreport'),
     path('otheractivites/', views.OthersActivity, name = 'otheractivites'),
      path('otheractivitesview/', views.OthersActivityView, name = 'OthersActivityView'),
 
@@ -24,11 +25,11 @@ urlpatterns = [
     path('workfromhomeactivites/', views.WorkFromHomeActivites.as_view(), name = 'workfromhomeactivites'),
     path('covidactivites/', views.covidActivites.as_view(), name = 'covidactivites'),
     path('admindayactivites/', views.AdminDayActivites.as_view(), name = 'admindayactivites'),
-    
+    path('expensesreport/', views.ExpensesView , name = 'expenses-report' )
   
  #   path('dailyplan/', views.DailyplanView.as_view() , name = 'dailyplan-report' ),
   # 	path('drvisitreport/', views.DrvisitreportView.as_view() , name = 'drvisitreport-report' ),
-   #	path('expensesreport/', views.ExpensesView.as_view() , name = 'expenses-report' ),
+   	
    	#path('dailyworkingreport/', views.DailyworkingreportView.as_view() , name = 'dailyworkingreport-report' ),
    	#path('chemistcallreport/', views.ChemistcallreportView.as_view() , name = 'chemistcall-report' ),
    	#path('daysummaryreport/', views.DaysummaryreportView.as_view() , name = 'daysummary-report' ),

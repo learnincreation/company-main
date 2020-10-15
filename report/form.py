@@ -5,10 +5,6 @@ from company import settings
 
 from report.models import *
 
-
-
-
-
 class DirectHRForm(forms.ModelForm):
 	class Meta :
 		model = DirectHR  
@@ -41,14 +37,29 @@ class FieldForm(forms.ModelForm):
 class DailyDrcallReportForm(forms.ModelForm):
     class Meta:
         model = DailyDrcallReport
-        fields = [ 'dr_name','dr_speciality','meeting_place','prescrebtionBrand','user_WorkingPlace','current_month_business']
+        fields = [ 'dr_name','dr_speciality', 'Place',  'workwith' ,  'current_prescribing_brand','brand_name1','brand_name2','brand_name3','brand_name4','brand_name5','current_month_business']
+
+class DailyChemistcallReportForm(forms.ModelForm):
+    class Meta:
+        model = DailyChemistcallReport
+        fields = [ 'chemist_name', 'Place','brand_name1','brand_name2', 'brand_name3' , "mobile"]
+
+
+class ExpensesForm(forms.ModelForm):
+    class Meta:
+        model = Expenses
+        fields = [ 'calls_made', 
+    'chemist_meeting',
+     'travelling_from', 'travelling_to' , 
+     'distance_travelled' , 'total_appointment' , 
+     'daily_allowance' ,'telephone_internet_expenses' , 'total'] 
 
 
 
 class DailyDrMeetingReportForm(forms.ModelForm):
     class Meta:
-        model = DailyDrcallReport
-        fields = [ 'dr_name','dr_speciality','meeting_place','prescrebtionBrand','user_WorkingPlace','current_month_business']
+        model = DailyDrMeetingReport
+        fields = [ 'dr_name','dr_speciality','meeting_place']
     
     
     

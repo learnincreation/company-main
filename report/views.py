@@ -120,10 +120,48 @@ def DailyDrcallReportview(request):
 			dailycallreport.user = request.user
 			dailycallreport.dr_name = drlist
 			dailycallreport.save()
-			return redirect('report-home')
+			return redirect('dailychemistmeetingreport')
 	else:
 		form = DailyDrcallReportForm()
 	return render(request,  '../templates/report/DailyDrcallReport.html', {'form': form})	
+
+
+
+
+def DailyChemistcallReportview(request):
+	if request.method == "POST":
+		form = DailyChemistcallReportForm(request.POST)
+		if form.is_valid():
+			chrlist = ChemistMasterList.objects.all().first()
+			dailycallreport = form.save(commit=False)
+			dailycallreport.user = request.user
+			dailycallreport.chemist_name = chrlist
+			dailycallreport.save()
+			return redirect('expenses-report')
+	else:
+		form = DailyChemistcallReportForm()
+	return render(request,  '../templates/report/dailychemistcallreport.html', {'form': form})
+
+
+
+
+
+
+def ExpensesView(request):
+	if request.method == "POST":
+		form = ExpensesForm(request.POST)
+		if form.is_valid():
+			expenseslist = Expenses.objects.all()
+			expenseslist = form.save(commit=False)
+			expenseslist.user = request.user
+			
+			expenseslist.save()
+			return redirect('report-home')
+	else:
+		form = ExpensesForm()
+	return render(request,  '../templates/report/Expenses.html', {'form': form})
+
+
 
 
 def MeetingActivites(request):
@@ -181,13 +219,6 @@ def OthersActivityView(request):
 	else:
 		form = OtherViewForm()
 	return render(request,  '../templates/report/otheractivitesview.html', {'form': form})
-
-
-
-
-
-
-	
 
 
 class WorkFromHomeActivites(CreateView):

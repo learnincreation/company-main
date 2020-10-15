@@ -16,6 +16,7 @@ class DirectHR(models.Model):
 
 class LeaveHR(models.Model):
 	is_approved = models.BooleanField(default = False)
+	is_rejected = models.BooleanField(default = False)
 	user = models.ForeignKey(User , on_delete = models.CASCADE , null = True)
 	reason = models.TextField()
 	date = models.DateTimeField(default = timezone.now)
@@ -112,17 +113,18 @@ DAY = [
 			('SUNDAY', "SUNDAY"),
 			
 	]
-Brand_CHOICES = (
-        ('Brand1', 'Brand1'),
-        ('Brand2', 'Brand2'),
-		('Brand3', 'Brand3'),
-		('Brand4', 'Brand4'),
-		('Brand5', 'Brand5'),
-    )
 
+WORKWITH = [
+			('ALONE', "ALONE"),
+			('ABM', "ABM"),
+			('RBM', "RBM"),
+			('ZBM', "ZBM"),
+	]
 
 
 class DrMasterList(models.Model):
+	is_approved = models.BooleanField(default = False)
+	is_rejected = models.BooleanField(default = False)
 	dr_name 		= models.CharField(max_length = 100)
 	city 			= models.CharField(max_length = 100)
 	dr_speciality	=  models.CharField(max_length = 100, choices = SPECIALITY )
@@ -134,6 +136,8 @@ class DrMasterList(models.Model):
 
 
 class ChemistMasterList(models.Model):
+	is_approved = models.BooleanField(default = False)
+	is_rejected = models.BooleanField(default = False)
 	chemist_name 		= models.CharField(max_length = 100)
 	city 			= models.CharField(max_length = 100)
 	mobile = models.CharField(max_length = 10)	
@@ -143,6 +147,8 @@ class ChemistMasterList(models.Model):
 		return self.chemist_name
 
 class DailyActivites(models.Model):
+	is_approved = models.BooleanField(default = False)
+	is_rejected = models.BooleanField(default = False)
 	user 	= models.ForeignKey(User, on_delete= models.CASCADE) 
 	is_field = models.BooleanField(default = False)
 	is_meeting = models.BooleanField(default = False)
@@ -160,36 +166,89 @@ class DailyActivites(models.Model):
 
 
 class DailyDrcallReport(models.Model):
+	is_approved = models.BooleanField(default = False)
+	is_rejected = models.BooleanField(default = False)
 	user = models.ForeignKey(User,on_delete=models.CASCADE)
-	dr_name = models.ForeignKey(DrMasterList,on_delete=models.CASCADE)
-	dr_speciality = models.CharField(max_length = 100, choices = SPECIALITY)
-	meeting_place = models.CharField(max_length = 100, choices = MEETING_PLACE)
-	Date_time = models.DateTimeField(auto_now = True)
-	prescrebtionBrand = models.CharField(max_length = 100,choices=Brand_CHOICES)
-	user_WorkingPlace = models.CharField(max_length = 100)
-	current_month_business = models.IntegerField()
+	dr_name = models.ForeignKey(DrMasterList,on_delete=models.CASCADE , null= True)
+	dr_speciality = models.CharField(max_length = 100, choices = SPECIALITY , null= True)
+	Date_time = models.DateTimeField(auto_now = True , null= True)
+	current_prescribing_brand = models.CharField(max_length = 100,choices=CURRENT_PRESCRIBING_BRAND , null= True)
+	brand_name1 = models.CharField(max_length = 100,choices=CURRENT_PRESCRIBING_BRAND , null= True)
+	brand_name2 = models.CharField(max_length = 100,choices=CURRENT_PRESCRIBING_BRAND , null= True)
+	brand_name3 = models.CharField(max_length = 100,choices=CURRENT_PRESCRIBING_BRAND , null= True)
+	brand_name4 = models.CharField(max_length = 100,choices=CURRENT_PRESCRIBING_BRAND , null= True)
+	brand_name5 = models.CharField(max_length = 100,choices=CURRENT_PRESCRIBING_BRAND , null= True)
+	Place = models.CharField(max_length = 100 , choices = PLACES , null= True)
+	current_month_business = models.IntegerField( null= True)
+	workwith = models.CharField(max_length=10 , choices =WORKWITH , null = True )
 	
 
 
 	def __str__(self):
-		return str(self.user.useername) + '-' + str(self.dr_name)  + '-' + str(self.dr_speciality) + '-' + str(self.meeting_place) 
+		return str(self.user.username) + '-' + str(self.dr_name)  + '-' + str(self.dr_speciality) + '-' + str(self.Place) 
+
+
+
+class DailyChemistcallReport(models.Model):
+	is_approved = models.BooleanField(default = False)
+	is_rejected = models.BooleanField(default = False)
+	user = models.ForeignKey(User,on_delete=models.CASCADE)
+	chemist_name = models.ForeignKey(ChemistMasterList,on_delete=models.CASCADE, null = True)
+	Date_time = models.DateTimeField(auto_now = True , null = True)
+	mobile = models.IntegerField()
+	brand_name1 = models.CharField(max_length = 100,choices=CURRENT_PRESCRIBING_BRAND, null = True)
+	brand_name2 = models.CharField(max_length = 100,choices=CURRENT_PRESCRIBING_BRAND , null = True)
+	brand_name3 = models.CharField(max_length = 100,choices=CURRENT_PRESCRIBING_BRAND, null = True)
+	Place = models.CharField(max_length = 100 , choices = PLACES , null= True)
+
+	
+
+
+	def __str__(self):
+		return str(self.user.username) + '-' + str(self.chemist_name)  + '-' + str(self.brand_name1) + '-' + str(self.Place) 
+
+
+class Expenses (models.Model):
+	is_approved = models.BooleanField(default = False)
+	is_rejected = models.BooleanField(default = False)
+	user = models.ForeignKey(User, on_delete= models.CASCADE)
+	date = models.DateTimeField(auto_now = True)
+	
+	calls_made = models.IntegerField()
+	chemist_meeting = models.IntegerField()
+	travelling_from = models.CharField(max_length = 100)
+	travelling_to = models.CharField(max_length = 100)
+	distance_travelled = models.IntegerField()
+	total_appointment = models.IntegerField()
+	daily_allowance = models.IntegerField()
+	telephone_internet_expenses = models.IntegerField()
+	total = models.IntegerField()
+
+	def __str__(self):
+		return self.user.username  
+
+
 
 
 class DailyDrMeetingReport(models.Model):
+	is_approved = models.BooleanField(default = False)
+	is_rejected = models.BooleanField(default = False)
 	user = models.ForeignKey(User,on_delete=models.CASCADE)
-	dr_name = models.ForeignKey(DrMasterList,on_delete=models.CASCADE)
-	dr_speciality = models.CharField(max_length = 100, choices = SPECIALITY)
-	meeting_place = models.CharField(max_length = 100, choices = MEETING_PLACE)
-	Date_time = models.DateTimeField(auto_now = True)
+	dr_name = models.ForeignKey(DrMasterList,on_delete=models.CASCADE , null = True)
+	dr_speciality = models.CharField(max_length = 100, choices = SPECIALITY , null = True)
+	meeting_place = models.CharField(max_length = 100, choices = MEETING_PLACE , null = True)
+	Date_time = models.DateTimeField(auto_now = True , null = True)
 	
 	
 
 
 	def __str__(self):
-		return str(self.dr_name) + '-' + str(self.dr_speciality) + '-' + str(self.user.username) 
+		return str(self.user.username) + '-' + str(self.dr_speciality) + '-' + str(self.dr_name) 
 
 
 class Others(models.Model):
+	is_approved = models.BooleanField(default = False)
+	is_rejected = models.BooleanField(default = False)
 	user = models.ForeignKey(User,on_delete=models.CASCADE)
 	text = models.TextField(max_length=200)
 
