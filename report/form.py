@@ -5,6 +5,28 @@ from company import settings
 
 from report.models import *
 
+
+
+
+JOB = [
+            ('ON FIELD', "ON FIELD"),
+            ('MEETING', "MEETING"),
+            ('WORK FROM HOME', "WORK FROM HOME"),
+            ('COVID19', "COVID19"),
+            ('OTHERS', "OTHERS"),
+            ('ADMIN DAY ', "ADMIN DAY"),
+    ]
+
+
+class MonthlyPlanForm(forms.ModelForm):
+    doctor_name = forms.CharField(max_length= 50)
+    plan_date = forms.DateField(widget = forms.SelectDateWidget)
+
+    class Meta :
+        model = Monthlyplan  
+        fields = [ "doctor_name" , 'plan_date']
+
+
 class DirectHRForm(forms.ModelForm):
 	class Meta :
 		model = DirectHR  

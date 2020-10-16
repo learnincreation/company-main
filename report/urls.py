@@ -19,8 +19,8 @@ urlpatterns = [
     path('daily-chemist-callReport-view/', views.DailyChemistcallReportview, name = 'dailychemistmeetingreport'),
     path('otheractivites/', views.OthersActivity, name = 'otheractivites'),
      path('otheractivitesview/', views.OthersActivityView, name = 'OthersActivityView'),
-
-
+    path('monthlyplan/', views.Monthlyplanview, name = 'month-planing'),
+    path('monthlyplanlist/', views.MonthlyplanList, name = 'month-planlist'),
     path('meetingactivites/', views.MeetingActivites, name = 'meetingactivites'),
     path('workfromhomeactivites/', views.WorkFromHomeActivites.as_view(), name = 'workfromhomeactivites'),
     path('covidactivites/', views.covidActivites.as_view(), name = 'covidactivites'),

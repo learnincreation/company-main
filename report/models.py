@@ -33,6 +33,17 @@ MEETING_PLACE = [
 	]
 
 
+JOB = [
+			('ON FIELD', "ON FIELD"),
+			('MEETING', "MEETING"),
+			('WORK FROM HOME', "WORK FROM HOME"),
+			('COVID19', "COVID19"),
+			('OTHERS', "OTHERS"),
+			('ADMIN DAY ', "ADMIN DAY"),
+	]
+
+
+
 CURRENT_PRESCRIBING_BRAND = [
 			('CITOSYN-P', "CITOSYN-P"),
 			('CITOSYN 2 ML', "CITOSYN 2 ML"),
@@ -161,6 +172,17 @@ class DailyActivites(models.Model):
 	def __str__(self):
 		return self.user.username
 
+
+class Monthlyplan(models.Model):
+	is_approved = models.BooleanField(default = False)
+	is_rejected = models.BooleanField(default = False)
+	user 	= models.ForeignKey(User, on_delete= models.CASCADE) 
+	doctor_name = models.CharField(max_length= 50)
+	plan_date = models.DateField()
+
+
+	def __str__(self):
+		return self.user.username
 
 
 

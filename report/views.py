@@ -17,7 +17,7 @@ def AllDrList(request):
 	return render(request,"../templates/report/AllDrlist.html",{"drlist":drlist})
 
 def MonthlyplanList(request):
-	monthlyplan = MonthPlan.objects.filter( user = request.user)
+	monthlyplan = Monthlyplan.objects.filter( user = request.user)
 	return render(request,"../templates/report/monthlyplanlist.html",{"monthlyplan":monthlyplan})
 
 
@@ -26,6 +26,35 @@ def AllChemistList(request):
 	chemistlist = ChemistMasterList.objects.filter( user = request.user)
 	return render(request,"../templates/report/allchemistlist.html",{"chemistlist":chemistlist})
 
+
+
+def Monthlyplanview(request):
+	if request.method == "POST":
+		    form = MonthlyPlanForm(request.POST)
+		    if form.is_valid():
+		    	monthplan = form.save(commit=False)
+		    	monthplan.user = request.user
+		    	monthplan.save()
+		    	return redirect('month-planlist')
+	else:
+		form = MonthlyPlanForm()
+		return render(request, 'report/monthlyplan.html', {'form': form})
+
+
+
+
+
+def monthlyplan(request):
+	if request.method == "POST":
+		    form = LeaveHRForm(request.POST)
+		    if form.is_valid():
+		    	leavehr = form.save(commit=False)
+		    	leavehr.user = request.user
+		    	leavehr.save()
+		    	return redirect('report-home')
+	else:
+		form = LeaveHRForm()
+		return render(request, 'report/LeaveHR.html', {'form': form})
 
 
 
